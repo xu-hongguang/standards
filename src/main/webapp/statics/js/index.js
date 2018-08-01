@@ -5,6 +5,7 @@ $(function () {
         location.href = "/standard/add";
     });
 
+    //首先设置批量选择
     $("#checkAllOrNo").click(function () {
         /*if (this.checked) {
             //全选
@@ -26,13 +27,13 @@ $(function () {
 
         /**获取到下面所有checkbox*/
         var boxs = $("[name=id]:checkbox");
-        /*
-          * 下面是为checkAllOrNo设置它是否checked属性
-            boxs.length表示所有子checkbox的个数
-            boxs.filter(":checked").length表示是过滤出所有
-                   子checkbox当中已经被点击选中的checkbox的个数，如果个数相等，
-                   那么就会返回true,如果不相等，就返回false
-        */
+        /**
+         * 下面是为checkAllOrNo设置它是否checked属性
+         * boxs.length表示所有子checkbox的个数
+         * boxs.filter(":checked").length表示是过滤出所有
+         *         子checkbox当中已经被点击选中的checkbox的个数，如果个数相等，
+         *         那么就会返回true,如果不相等，就返回false
+         */
         $("#checkAllOrNo").prop("checked", boxs.length === boxs.filter(":checked").length);
     });
 });

@@ -23,7 +23,7 @@ public class Tool {
     }
 
     /**
-     * 字符串转日期
+     * 字符串转日期+1
      *
      * @param date    要转换日期字符串
      * @param pattern 转化格式
@@ -67,19 +67,19 @@ public class Tool {
 //            文件不为空时处理
         if (!multipartFile.isEmpty()) {
 
-//        上传文件部分
+//            上传文件部分
             String filePath = request.getSession().getServletContext().getRealPath("uploads");
             File newFile = new File(filePath);
             if (!newFile.exists()) {
                 newFile.mkdir();
             }
 
-//                处理文件名重复
-//                  原始文件名
+//            处理文件名重复
+//            原始文件名
             String originalFilename = multipartFile.getOriginalFilename();
-//                文件后缀名
+//            文件后缀名
             String nowFileName = originalFilename.substring(originalFilename.indexOf(".") - 1, originalFilename.length());
-//                当前文件名
+//            当前文件名
             image = UUID.randomUUID() + nowFileName;
 
             String imageName = filePath + "/" + image;
@@ -138,7 +138,6 @@ public class Tool {
         }
     }
 
-
     /**
      * 下载文件
      *
@@ -165,7 +164,6 @@ public class Tool {
             } else {
                 fileName = new String(file.getName().replaceAll(" ", "").getBytes("utf-8"), "iso8859-1");
             }
-
 
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
             response.addHeader("Content-Length", "" + file.length());

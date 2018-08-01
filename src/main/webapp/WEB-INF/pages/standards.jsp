@@ -58,19 +58,19 @@ ${result}
                 </c:when>
                 <c:otherwise>
                     <tr>
-                        <td colspan="7" style="height: 50px;size: 30px">没有您查询的图书</td>
+                        <td colspan="7" style="height: 50px;size: 30px">没有您查询的数据</td>
                     </tr>
                 </c:otherwise>
             </c:choose>
             <td class="tbody" colspan="7">
-                <a onclick="goListForm(1)">首页</a>|
+                <a href="#" onclick="goListForm(1)">首页</a>|
                 <c:if test="${pager.pageNo gt 1}">
-                    <a onclick="goListForm(${pager.pageNo-1})">上一页</a>|
+                    <a href="#" onclick="goListForm(${pager.pageNo-1})">上一页</a>|
                 </c:if>
                 <c:if test="${pager.pageNo lt pager.pageCounts}">
-                    <a onclick="goListForm(${pager.pageNo+1})">下一页</a>|
+                    <a href="#" onclick="goListForm(${pager.pageNo+1})">下一页</a>|
                 </c:if>
-                <a onclick="goListForm(${pager.pageCounts})">尾页</a>
+                <a href="#" onclick="goListForm(${pager.pageCounts})">尾页</a>
                 <c:if test="${pager.pageCounts gt 1}">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <span>第${pager.pageNo}页</span>/<span>共${pager.pageCounts}页</span>

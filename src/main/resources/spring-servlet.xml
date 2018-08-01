@@ -22,6 +22,21 @@
         <property name="exposeContextBeansAsAttributes" value="true"/>
     </bean>
 
+
+    <!--配置转换器服务-->
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!-- 指定自定义转换器的全路径名称 (日期转换器 在对应的日期属性上加注解@DateTimeFormat) -->
+                <bean class="com.xhg.ssm.tool.CustomGlobalStrToDateConverter"/>
+                <bean class="com.xhg.ssm.tool.DateToStrConverter"/>
+            </set>
+        </property>
+    </bean>
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+
     <mvc:annotation-driven>
         <!--
             设置相应的JSON数据的编码

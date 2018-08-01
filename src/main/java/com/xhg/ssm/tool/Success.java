@@ -1,4 +1,4 @@
-package com.bdqn.logistic.tool;
+package com.xhg.ssm.tool;
 
 public class Success {
 
