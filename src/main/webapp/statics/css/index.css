@@ -1,0 +1,42 @@
+.body{
+    margin: 0 auto;
+}
+
+h2{
+    width: 200px;
+    margin: 5px auto;
+}
+
+table{
+    border-collapse: collapse;
+    width: 1000px;
+    margin: 5px auto;
+}
+
+table td{
+    border: 1px solid #cccccc;
+    text-align: center;
+    vertical-align: middle;
+}
+.thead{
+    text-align:right ;
+}
+.tbody{
+    background-color: white;
+    text-align: right;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+.id{
+    display: none;
+}
+
+
+

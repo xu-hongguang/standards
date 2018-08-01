@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <!--自动装配-->
+    <context:component-scan base-package="com.xhg.ssm"/>
+
+    <!--导入.properties文件-->
+    <!--<context:property-placeholder location="classpath:db.properties"/>-->
+
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--2、配置事务管理策略
+   <tx:advice id="txManager" transaction-manager="transactionManager">
+       <tx:attributes>
+           &lt;!&ndash;配置一些事务属性&ndash;&gt;
+           <tx:method name="add*" isolation="DEFAULT" propagation="REQUIRED"/>
+           <tx:method name="find*" read-only="true"/>
+           <tx:method name="get*" read-only="true"/>
+           <tx:method name="update*" isolation="DEFAULT" propagation="REQUIRED"/>
+           <tx:method name="*" isolation="SERIALIZABLE"/>
+       </tx:attributes>
+   </tx:advice>
+   &lt;!&ndash;3.1、配置事务AOP&ndash;&gt;
+   <aop:config>
+       &lt;!&ndash;事务应该配置在逻辑层，而不是数据层&ndash;&gt;
+       <aop:pointcut id="myPointcut" expression="execution(* com.xhg.library..*(..))"/>
+       <aop:advisor advice-ref="txManager" pointcut-ref="myPointcut"/>
+   </aop:config>-->
+
+    <!--开启声明式事务-->
+    <!--<tx:annotation-driven/>-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <!--数据源DBCP配置-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          p:driverClassName="com.mysql.jdbc.Driver"
+          p:username="root"
+          p:password="root"
+          p:maxIdle="30"
+          p:maxWaitMillis="10000"
+          p:url="jdbc:mysql://localhost:3306/standard?useSSL=false">
+    </bean>
+
+    <!--sqlSessionFactory,注入数据源，载入MyBatis配置文件-->
+    <!--使用Spring整合Mybatis（Spring来创建管理Mybatis中的对象）
+       1)可以直接不使用Mybatis的配置文件，将相关的配置信息直接配置在当前的bean中
+       2)也可以使用configLocation属性，将原始的Mybatis配置文件直接导入当前的bean
+    -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--使用sqlSessionFactory的beanName注入-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--指定所有接口文件所有的包-->
+        <property name="basePackage" value="com.xhg.ssm.dao"/>
+    </bean>
+
+</beans>

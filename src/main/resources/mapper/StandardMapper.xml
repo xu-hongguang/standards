@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhg.ssm.dao.StandardMapper">
+    <resultMap id="BaseResultMap" type="com.xhg.ssm.entity.Standard">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="std_num" jdbcType="VARCHAR" property="std_num"/>
+        <result column="zhname" jdbcType="VARCHAR" property="zhname"/>
+        <result column="version" jdbcType="VARCHAR" property="version"/>
+        <result column="keys" jdbcType="VARCHAR" property="keys"/>
+        <result column="release_date" jdbcType="TIMESTAMP" property="release_date"/>
+        <result column="impl_date" jdbcType="TIMESTAMP" property="impl_date"/>
+        <result column="package_path" jdbcType="VARCHAR" property="package_path"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, std_num, zhname, version, `keys`, release_date, impl_date, package_path
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from standard
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--按照名称模糊分页查询-->
+    <select id="selectByLikeName" resultType="com.xhg.ssm.entity.Standard">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM standard
+        <where>
+            <if test="likeName != null and likeName != ''">
+                AND zhname LIKE "%"#{likeName}"%" or std_num like "%"#{likeName}"%"
+            </if>
+        </where>
+        order by CONVERT((SUBSTRING_INDEX(SUBSTRING_INDEX(std_num, '.', -1),'-',1)),SIGNED) ASC
+        limit #{pageNo},#{pageSize}
+    </select>
+
+    <!--查询所有信息-->
+    <select id="selectAll" resultType="com.xhg.ssm.entity.Standard">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM standard
+        order by CONVERT((SUBSTRING_INDEX(SUBSTRING_INDEX(std_num, '.', -1),'-',1)),SIGNED) ASC
+        limit #{pageNo},#{pageSize}
+    </select>
+
+    <!--获取总记录-->
+    <select id="getCounts" resultType="java.lang.Integer">
+        SELECT count(1) FROM standard
+        <where>
+            <if test="likeName != null and likeName != ''">
+                AND zhname LIKE "%"#{likeName}"%" or std_num like "%"#{likeName}"%"
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="selectAllStandard" resultType="com.xhg.ssm.entity.Standard">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM standard
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from standard
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.xhg.ssm.entity.Standard">
+    insert into standard (std_num, zhname,
+      version, `keys`, release_date,
+      impl_date, package_path)
+    values (#{std_num,jdbcType=VARCHAR}, #{zhname,jdbcType=VARCHAR},
+      #{version,jdbcType=VARCHAR}, #{keys,jdbcType=VARCHAR}, #{release_date,jdbcType=TIMESTAMP}, 
+      #{impl_date,jdbcType=TIMESTAMP}, #{package_path,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.xhg.ssm.entity.Standard">
+        insert into standard
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="std_num != null">
+                std_num,
+            </if>
+            <if test="zhname != null">
+                zhname,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="keys != null">
+                `keys`,
+            </if>
+            <if test="release_date != null">
+                release_date,
+            </if>
+            <if test="impl_date != null">
+                impl_date,
+            </if>
+            <if test="package_path != null">
+                package_path,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="std_num != null">
+                #{std_num},
+            </if>
+            <if test="zhname != null">
+                #{zhname},
+            </if>
+            <if test="version != null">
+                #{version},
+            </if>
+            <if test="keys != null">
+                #{keys},
+            </if>
+            <if test="release_date != null">
+                #{release_date},
+            </if>
+            <if test="impl_date != null">
+                #{impl_date},
+            </if>
+            <if test="package_path != null">
+                #{package_path},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xhg.ssm.entity.Standard">
+        update standard
+        <set>
+            <if test="std_num != null">
+                std_num = #{std_num,jdbcType=VARCHAR},
+            </if>
+            <if test="zhname != null">
+                zhname = #{zhname,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="keys != null">
+                `keys` = #{keys,jdbcType=VARCHAR},
+            </if>
+            <if test="release_date != null">
+                release_date = #{release_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="impl_date != null">
+                impl_date = #{impl_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="package_path != null">
+                package_path = #{package_path,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xhg.ssm.entity.Standard">
+    update standard
+    set std_num = #{std_num,jdbcType=VARCHAR},
+      zhname = #{zhname,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      `keys` = #{keys,jdbcType=VARCHAR},
+      release_date = #{release_date,jdbcType=TIMESTAMP},
+      impl_date = #{impl_date,jdbcType=TIMESTAMP},
+      package_path = #{package_path,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
