@@ -23,7 +23,7 @@ public class Tool {
     }
 
     /**
-     * 字符串转日期+1
+     * 字符串转为日期
      *
      * @param date    要转换日期字符串
      * @param pattern 转化格式
