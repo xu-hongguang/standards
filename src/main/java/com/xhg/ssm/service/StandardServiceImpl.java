@@ -4,6 +4,10 @@ import com.xhg.ssm.dao.StandardMapper;
 import com.xhg.ssm.entity.Page;
 import com.xhg.ssm.entity.Standard;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +16,14 @@ import java.util.List;
  * @author 16033
  */
 @Service
+@CacheConfig(cacheNames = "standards")
 public class StandardServiceImpl implements StandardService {
 
     @Autowired
     private StandardMapper mapper;
 
     @Override
+    @CacheEvict(key = "#p0")
     public int deleteByPrimaryKey(Integer id) {
         return mapper.deleteByPrimaryKey(id);
     }
@@ -28,11 +34,13 @@ public class StandardServiceImpl implements StandardService {
     }
 
     @Override
+    @CachePut(key = "#p0.id")
     public int insertSelective(Standard record) {
         return mapper.insertSelective(record);
     }
 
     @Override
+    @Cacheable(key = "#p0")
     public Standard selectByPrimaryKey(Integer id) {
         return mapper.selectByPrimaryKey(id);
     }

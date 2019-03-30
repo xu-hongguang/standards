@@ -121,8 +121,8 @@ public class Tool {
                         new BufferedInputStream(new FileInputStream(sourceFile));
 
                 // 创建输出流
-                BufferedOutputStream output =
-                        new BufferedOutputStream(new FileOutputStream(targetFile));
+                BufferedOutputStream output = new BufferedOutputStream(
+                        new FileOutputStream(targetFile))
         ) {
             // 读出源文件内容并写入目标文件
             int r, numberOfBytesCopied = 0;

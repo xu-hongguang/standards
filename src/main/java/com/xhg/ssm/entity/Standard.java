@@ -2,14 +2,14 @@ package com.xhg.ssm.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * standard
- * @author 
+ *
+ * @author
  */
 public class Standard implements Serializable {
     /**
@@ -17,29 +17,30 @@ public class Standard implements Serializable {
      */
     private Integer id;
 
-    @NotNull
-    @Size(min = 1,max = 20,message = "标准号不能为空！")
+    // message 直接提供错误信息
+    @NotNull(message = "标准号不能为空")
+    @Pattern(regexp = "GB 6657.[0-9]*-2018", message = "用户名格式不正确(例：GB 6657.xx-2018)")
     private String std_num;
 
     /**
      * 中文名称
      */
     @NotNull
-    @Size(min = 1,max = 100,message = "中文名不能为空！")
+    @Size(min = 1, max = 100, message = "中文名不能为空！")
     private String zhname;
 
     /**
      * 版本
      */
     @NotNull
-    @Size(min = 1, max = 10,message = "版本不能为空！")
+    @Size(min = 1, max = 10, message = "版本不能为空！")
     private String version;
 
     /**
      * 关键字/词
      */
     @NotNull
-    @Size(min = 1, max = 20,message = "关键字/词不能为空！")
+    @Size(min = 1, max = 20, message = "关键字/词不能为空！")
     private String keys;
 
     /**
@@ -52,6 +53,8 @@ public class Standard implements Serializable {
      * 实施日期
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "实施日期不能为空！")
+    @Future(message = "填一个将来的日期")
     private Date impl_date;
 
     /**
@@ -138,13 +141,13 @@ public class Standard implements Serializable {
         }
         Standard other = (Standard) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getStd_num() == null ? other.getStd_num() == null : this.getStd_num().equals(other.getStd_num()))
-            && (this.getZhname() == null ? other.getZhname() == null : this.getZhname().equals(other.getZhname()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
-            && (this.getKeys() == null ? other.getKeys() == null : this.getKeys().equals(other.getKeys()))
-            && (this.getRelease_date() == null ? other.getRelease_date() == null : this.getRelease_date().equals(other.getRelease_date()))
-            && (this.getImpl_date() == null ? other.getImpl_date() == null : this.getImpl_date().equals(other.getImpl_date()))
-            && (this.getPackage_path() == null ? other.getPackage_path() == null : this.getPackage_path().equals(other.getPackage_path()));
+                && (this.getStd_num() == null ? other.getStd_num() == null : this.getStd_num().equals(other.getStd_num()))
+                && (this.getZhname() == null ? other.getZhname() == null : this.getZhname().equals(other.getZhname()))
+                && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+                && (this.getKeys() == null ? other.getKeys() == null : this.getKeys().equals(other.getKeys()))
+                && (this.getRelease_date() == null ? other.getRelease_date() == null : this.getRelease_date().equals(other.getRelease_date()))
+                && (this.getImpl_date() == null ? other.getImpl_date() == null : this.getImpl_date().equals(other.getImpl_date()))
+                && (this.getPackage_path() == null ? other.getPackage_path() == null : this.getPackage_path().equals(other.getPackage_path()));
     }
 
     @Override

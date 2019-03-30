@@ -56,6 +56,10 @@
             color: red;
             font-size: 12px;
         }
+
+        .implDate{
+            width: 147px;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +100,8 @@ ${result}
         <tr>
             <td class="t1">实施日期(yyyy-MM-dd)：</td>
             <td class="t2">
-                <sf:input path="impl_date" type="date" />
+                <sf:input path="impl_date" type="date" cssClass="implDate"/>
+                <sf:errors path="impl_date" cssStyle="color:red;font-size: 12px"/>
             </td>
         </tr>
         <tr>
@@ -108,7 +113,7 @@ ${result}
         </tr>
         <td class="t3" colspan="2">
             <input type="submit" class="submit" value="保存">
-            <input type="button" class="back" value="取消">
+            <input type="button" <%--class="back" --%>onclick="history.back()" value="取消">
         </td>
     </table>
 </sf:form>

@@ -1,5 +1,6 @@
 package com.xhg.ssm.controllor;
 
+import com.alibaba.fastjson.JSON;
 import com.xhg.ssm.entity.Standard;
 import com.xhg.ssm.entity.Tool;
 import com.xhg.ssm.service.StandardService;
@@ -7,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class UpdateDeleteControllor {
@@ -124,6 +125,17 @@ public class UpdateDeleteControllor {
         }
 
         return "forward:/list";
+    }
+
+    @RequestMapping("/get")
+    @ResponseBody
+    public String get(@RequestHeader("Accept-Language") String string, @CookieValue("JSESSIONID") String string1){
+        List<String> strings = new ArrayList<>();
+
+        strings.add(string);
+        strings.add(string1);
+
+        return JSON.toJSONString(strings);
     }
 
 }

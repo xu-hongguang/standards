@@ -31,7 +31,7 @@
                 AND zhname LIKE "%"#{likeName}"%" or std_num like "%"#{likeName}"%"
             </if>
         </where>
-        order by CONVERT((SUBSTRING_INDEX(SUBSTRING_INDEX(std_num, '.', -1),'-',1)),SIGNED) ASC
+        order by impl_date ASC , CONVERT((SUBSTRING_INDEX(SUBSTRING_INDEX(std_num, '.', -1),'-',1)),SIGNED) ASC
         limit #{pageNo},#{pageSize}
     </select>
 

@@ -56,6 +56,10 @@
         span {
             color: red;
         }
+
+        .implDate{
+            width: 147px;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +100,9 @@
         <tr>
             <td class="t1">实施日期(yyyy-MM-dd)：</td>
             <td class="t2">
-                <input type="text" name="impl_date" id="date" value="${implDate}"/>
+                <%--<input type="text" name="impl_date" id="date" value="${implDate}"/>--%>
+                <sf:input path="impl_date" type="date" value="${implDate}" cssClass="implDate"/>
+                <sf:errors path="impl_date" cssStyle="color:red;font-size: 12px"/>
             </td>
         </tr>
         <tr>
